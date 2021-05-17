@@ -1,0 +1,161 @@
+<section class="right-part filter-pad inner_listing">
+  <div class="topheading">
+    <h1>
+     {{childData.heading}}
+     <div class="btn-header">
+        <button class="btn-main" (click)="globalService.addTab('add'+childData.heading,childData.tablink+'/add','Add '+childData.heading,childData.tabparrentid);globalService.navigateToUrl('/'+childData.tablink+'/add');"
+        *ngIf="childData.ispopup=='N'" matTooltipClass="mat-tooltip-white" mdTooltip="Add" mat-raised-button>Add New</button>
+         <button class="btn-main" (click)="openPop()" *ngIf="childData.ispopup=='Y'"><span class="icon-add"></span></button>	
+      </div>			
+      <div class="clear"></div>
+    </h1>
+  </div>
+
+  <div class="serch_and_filtersec">
+
+    <div class="sec-l"></div>
+    <div class="sec-r">
+
+<!--       <div class="btn-header">
+        <button type="submit" mat-raised-button class="btn-main">Edit</button>
+        <button type="submit" mat-raised-button class="btn-main red">Delete</button>
+      </div> -->
+
+      <div class="serch_sec">
+
+        <mat-form-field>
+          <i class="fa fa-search"></i> <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" />
+        </mat-form-field>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="clear"></div>
+  <div class="data-table" *ngIf="showSkeletonLoaded">
+    <table>
+      <tr>
+        <th class="check-select">
+        <mat-checkbox name="selectedAll"  [(ngModel)]="selectedAll" id="list-all" (change)="toggleCheckAll($event)"></mat-checkbox>
+        </th>
+        <ng-container >
+        <th  class="short" *ngFor="let item of temp_col"><span ></span></th>
+        </ng-container> 
+      </tr>
+      <tr *ngFor="let item of temp_result">   
+        <td>
+        <div></div>
+        <ng-template >
+        <mat-checkbox name="Selected" id="list" ></mat-checkbox>
+        </ng-template>
+        </td>
+        <ng-container >
+          <td *ngFor="let item of temp_col"><ng-container><div  class="skeleto-loader"></div></ng-container></td>
+        </ng-container>
+      </tr>
+    </table>
+  </div>
+  <div class="data-table">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
+      <!-- Checkbox Select Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- College Name Column -->
+      <ng-container matColumnDef="college_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>College Name</th>
+        <td mat-cell *matCellDef="let element">{{element.college_name}}</td>
+      </ng-container>
+
+      <!-- Representative Name Column -->
+      <ng-container matColumnDef="representative_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative Name</th>
+        <td mat-cell *matCellDef="let element">{{element.representative_name}}</td>
+      </ng-container>
+
+      <!-- Representative Email Column -->
+      <ng-container matColumnDef="representative_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative Email</th>
+        <td mat-cell *matCellDef="let element">{{element.representative_email}}</td>
+      </ng-container>
+
+      <!-- Representative Phone Column -->
+      <ng-container matColumnDef="representative_phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Representative Phone</th>
+        <td mat-cell *matCellDef="let element">{{element.representative_phone}}</td>
+      </ng-container>
+
+      <!-- Representative Status Column -->
+      <ng-container matColumnDef="representative_status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <!-- <td mat-cell *matCellDef="let element">{{element.representative_status}}</td> -->
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="element.representative_status==true?'status-box shipped':'status-box cancelled'">{{element.representative_status}}</span>
+        </td>
+      </ng-container>
+
+      <!-- Recruiter Name Column -->
+      <ng-container matColumnDef="recruiter_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recruiter Name</th>
+        <td mat-cell *matCellDef="let element">{{element.recruiter_name}}</td>
+      </ng-container>
+
+      <!-- Recruiter Company Column -->
+      <ng-container matColumnDef="recruiter_company">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recruiter Company</th>
+        <td mat-cell *matCellDef="let element">{{element.recruiter_company}}</td>
+      </ng-container>
+
+      <!-- Recruiter Column -->
+      <ng-container matColumnDef="recruiter_email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recruiter Email</th>
+        <td mat-cell *matCellDef="let element">{{element.recruiter_email}}</td>
+      </ng-container>
+
+      <!-- Recruiter Phone Column -->
+      <ng-container matColumnDef="recruiter_phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recruiter Phone</th>
+        <td mat-cell *matCellDef="let element">{{element.recruiter_phone}}</td>
+      </ng-container>
+
+      <!-- Recruiter Status Column -->
+      <ng-container matColumnDef="recruiter_status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <!-- <td mat-cell *matCellDef="let element">{{element.recruiter_status}}</td> -->
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="element.recruiter_status==true?'status-box shipped':'status-box cancelled'">{{element.recruiter_status}}</span>
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="data-ac">
+            <div class="nav-icon" (click)="getEditId(element.college_id)"><span class="{{element.edit}}"></span></div>
+            <div class="nav-icon" (click)="getDeleteId(element.college_id)"><span class="{{element.delete}}"></span></div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+    </table>
+  </div>
+</section>
+<div class="pagination-box">
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+</div>
+<div class="clear"></div>

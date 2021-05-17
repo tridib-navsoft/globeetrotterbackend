@@ -1,0 +1,132 @@
+<section class="right-part addall_page">
+	<div class="body-part addorderbody addorderbodypart" *ngIf="_globalService.isFormLoaded == 'Yes'">
+		<form #collegeForm="ngForm" novalidate (ngSubmit)="collegeForm.valid && addEditColleges(collegeForm)">
+	  <input type="hidden" name="college_id" [(ngModel)]="formModel.college_id">
+			<div class="topheading">
+				<h1>{{(formModel.college_id)?'Edit':'Add'}} College 
+					<div class="btn-header">
+					  <button type="submit" mat-raised-button class="btn-main">Save</button>
+						<button type="button" mat-raised-button class="btn-line" (click)="_globalService.deleteTab(tabIndex,parentId)">Cancel</button>
+						<label class="hidden-xs hidden-sm">Fields marked with <span>*</span> are compulsory</label>
+					</div>
+					<div class="clear"></div>
+				</h1>
+			</div>
+			<div class="clear"></div>
+		  <div class="box">
+			  <div class="fixed-width">
+				  <div class="row">
+					<div class="col-md-4">
+						<mat-form-field  class="md-block">
+							<mat-label>College Name</mat-label>
+							<input matInput placeholder="College Name" required #college_name="ngModel"  name="college_name" [(ngModel)]="formModel.college_name">
+							<mat-error *ngIf="college_name.errors && college_name.errors.required">
+								This is a <strong>required</strong> field
+							</mat-error>
+						</mat-form-field>
+					</div>
+					  <div class="col-md-4">
+						  <mat-form-field  class="md-block">
+							  <mat-label>Representative First Name</mat-label>
+							  <input matInput placeholder="First Name" required #college_represent_fname="ngModel"  name="college_represent_fname" [(ngModel)]="formModel.college_represent_fname">
+							  <mat-error *ngIf="college_represent_fname.errors && college_represent_fname.errors.required">
+								  This is a <strong>required</strong> field
+							  </mat-error>
+						  </mat-form-field>
+					  </div>
+					  <div class="col-md-4">
+						  <mat-form-field class="md-block">
+							  <mat-label>Representative Last Name</mat-label>
+							  <input matInput placeholder="Last Name" required #college_represent_lname="ngModel"  name="college_represent_lname" [(ngModel)]="formModel.college_represent_lname">
+							  <mat-error *ngIf="college_represent_lname.errors && college_represent_lname.errors.required">
+								  This is a <strong>required</strong> field
+							  </mat-error>
+						  </mat-form-field>
+					  </div>
+				  </div>
+				  <div class="row">
+					<div class="col-md-4">
+						<mat-form-field class="md-block">
+							<mat-label>Representative Email</mat-label>
+							<input matInput placeholder="Email" required #representative_email="ngModel"  name="representative_email" [(ngModel)]="formModel.representative_email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+							<mat-error *ngIf="representative_email.errors && representative_email.errors.required">
+							  This is a <strong>required</strong> field
+						  </mat-error>
+						  <mat-error *ngIf="representative_email.errors && representative_email.errors.pattern">
+							  Enter a valid <strong>email</strong> address
+						  </mat-error>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field class="md-block">
+							<mat-label>Representative Phone</mat-label>
+							<input matInput placeholder="Phone" required type="number" #representative_phone="ngModel" name="representative_phone" [(ngModel)]="formModel.representative_phone" maxlength="12">
+							<mat-error *ngIf="(representative_phone.errors && representative_phone.errors.minlength) || (representative_phone.errors && representative_phone.errors.required)">
+								Phone number should be between 10 to 12 characters
+							</mat-error>
+						</mat-form-field>
+					</div>
+				  </div>
+				  <div class="row">						
+					  <div class="col-md-4">
+						  <div class="md-block">
+							  <mat-form-field class="md-block">
+							  <mat-label>Representative Password</mat-label>
+							  <input matInput placeholder="Password" required="{{formModel.college_id ? false : true}}" required #college_password="ngModel" [type]="hide ? 'text' : 'password'" minlength="8" name="college_password" [(ngModel)]="formModel.college_password" pattern="^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&+=]).*$">
+							  <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa fa-eye-slash' : 'fa fa-eye'}}" aria-hidden="true"></i>
+							  <mat-error *ngIf="college_password.errors && college_password.errors.required">
+								Password is required
+							</mat-error>
+                            <mat-error *ngIf="college_password.errors && college_password.errors.minlength">
+                                Password length must be at least 8 characters
+                            </mat-error>
+                            <mat-error
+                                *ngIf="college_password.errors && college_password.errors.pattern && ObjectKeys(collegeForm.control.value.college_password).length >= 8">
+                                Password should contain at least one upper and lower case letter, number and special character.
+                            </mat-error>
+						  </mat-form-field>
+						  </div>
+					  </div>
+					  <div *ngIf="!formModel.college_id" class="col-md-4">
+						<div class="md-block">
+							<mat-form-field class="md-block">
+							<mat-label>Confirm Password</mat-label>
+							<input matInput placeholder="Confirm Password" required #confirm_password="ngModel" [type]="hide ? 'text' : 'password'" name="confirm_password" [(ngModel)]="formModel.confirm_password">
+							<i matSuffix (click)="hide = !hide" class="{{hide ? 'fa fa-eye-slash' : 'fa fa-eye'}}" aria-hidden="true"></i>
+							<mat-error *ngIf="confirm_password.errors && confirm_password.errors.required">
+								Confirm Password is required
+							</mat-error>
+						</mat-form-field>
+						</div>
+					</div>
+
+					<mat-slide-toggle [(ngModel)]="formModel.representative_status" name="representative_status">Representative Status {{ (formModel.representative_status == true? 'True' : 'False') }}</mat-slide-toggle> 
+<!-- 					  <ng-container *ngIf="formModel.college_id" class="col-md-4">
+						<div class="md-block">
+							<mat-form-field appearance="outline"  class="md-block">
+							<mat-label>Confirm Password</mat-label>
+							<input matInput placeholder="Confirm Password" #confirm_password="ngModel" [type]="hide ? 'text' : 'password'" name="confirm_password" [(ngModel)]="formModel.confirm_password">
+							<i matSuffix (click)="hide = !hide" class="{{hide ? 'fa fa-eye-slash' : 'fa fa-eye'}}" aria-hidden="true"></i>
+							<mat-error *ngIf="confirm_password.errors && confirm_password.errors.required">
+								Confirm Previously Typed Password
+							</mat-error>
+                            <mat-error *ngIf="confirm_password.errors && ObjectKeys(collegeForm.control.value.college_password !== collegeForm.control.value.confirm_password) ">
+                                Your Passwords doesn't match
+                            </mat-error>
+						</mat-form-field>
+						</div>
+					</ng-container> -->
+				  </div>
+			  </div>
+			  <!-- ///////////////Buttons//// -->
+			  <div class="btn-header hidden-xs">
+				  <button type="submit" mat-raised-button class="btn-main">Save</button>
+				  <button type="button" mat-raised-button class="btn-line" (click)="_globalService.deleteTab(tabIndex,parentId)">Cancel</button>
+			  </div> 
+			  <div class="clear"></div> 
+			  <!-- ///////////////Buttons//// --> 
+		  </div>
+			<div class="clear"></div>
+		</form>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<div class="maincontainer" [class.full]="innerWidth<1000">
+	<!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+	<div class="loada" *ngIf="showSpinnerLoaded==true">
+		<!-- <mat-spinner></mat-spinner> -->
+		<div class="spinner">
+			<div class="bounce1 bouncecolr1"></div>
+			<div class="bounce2 bouncecolr2"></div>
+			<div class="bounce3 bouncecolr3"></div>
+		</div>
+	</div>	
+	<header-menu *ngIf="isSidebarVisible && !router.url.includes('editor')"></header-menu>
+	<left-menu *ngIf="isSidebarVisible && !router.url.includes('editor')"></left-menu>
+	<tabs *ngIf="isSidebarVisible && !router.url.includes('editor')"></tabs>
+	<div class="login-bg" *ngIf="!isSidebarVisible && !router.url.includes('editor')">
+		<div class="login-header">
+			<div class="logo">
+				<a [routerLink] = "['/login']">
+					<img src="assets/images/footer-logo.png" class="png" alt="Globee Trotter">
+				</a>
+			</div>
+		</div>
+		<footer>&copy; <!-- 2021 Globeetrotter Admin --> All Rights Reserved. Privacy and Terms</footer>
+		<div class="clear"></div>
+	</div>
+	<main [@routerTransition]="getState(o)">
+      <router-outlet #o="outlet"></router-outlet>
+    </main>
+	<div class="clear"></div>
+	<footer-view *ngIf="isSidebarVisible"></footer-view>
+</div>

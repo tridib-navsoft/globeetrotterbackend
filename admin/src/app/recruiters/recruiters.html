@@ -1,0 +1,75 @@
+<section class="right-part filter-pad inner_listing">
+    <div class="topheading">
+        <h1 class="autoclick">Manage Recruiters</h1>
+    </div>
+    <div class="body-part">
+<!--         <div class="table-list tablefixedhead" *ngIf="showSkeletonLoaded">
+            <table>
+                <tr>
+                    <th class="check-select">
+                    <mat-checkbox name="selectedAll"  [(ngModel)]="selectedAll" id="list-all" (change)="toggleCheckAll($event)"></mat-checkbox>
+                    </th>
+                    <ng-container >
+                    <th  class="short" *ngFor="let item of temp_col"><span ></span></th>
+                    </ng-container> 
+                </tr>
+                <tr *ngFor="let item of temp_result">
+                    <td>
+                    <div ></div>
+                    <ng-template >
+                    <mat-checkbox name="Selected" id="list" ></mat-checkbox>
+                    </ng-template>
+                    </td>
+                    <ng-container >
+                        <td *ngFor="let item of temp_col"><ng-container><div  class="skeleto-loader"></div></ng-container></td>
+                    </ng-container>
+                </tr>
+            </table>
+        </div> -->
+<!--         <div class="table-list tablefixedhead">
+            <table>
+                <thead>
+                <tr>
+                <th class="check-select">
+                <mat-checkbox name="selectedAll"  [(ngModel)]="selectedAll" id="list-all" (change)="toggleCheckAll($event)"></mat-checkbox>
+                </th>
+                <ng-container *ngFor="let col of cols">
+                <th *ngIf="col.show == 1" class="short" (click)="generateGrid(0,1,col.field,filter,search.value)">{{col.title}}
+                    <span [class]="(sortBy==col.field)?sortClass:''"></span>
+                    <span class="icon-up up" *ngIf="sortBy!=col.field"></span>
+                    <span class="icon-down down" *ngIf="sortBy!=col.field"></span>
+                </th>
+                </ng-container> 
+                </tr>
+                </thead>
+                <tbody>
+                <tr [class.chec]="row.selected"  *ngFor="let row of result_list">
+                <td>
+                <div *ngIf="(childData.table=='EngageboostGroups' || childData.table=='EngageboostRolemasters'  || childData.table=='EngageboostUsers') && row.id==1;else checkboxes_selection"></div>
+                <ng-template #checkboxes_selection>
+                <mat-checkbox name="row.Selected" id="list{{row.id}}" [checked]="row.selected" (change)="toggleCheck(row.id,$event)"></mat-checkbox>
+                </ng-template>
+                </td>
+                <ng-container *ngFor="let col of cols">
+                
+                <td *ngIf="col.show == 1" attr.data-th="{{col.title}}" align="{{ (col.field_type=='p' || col.field_type=='n')?'right':'' }}">
+                <span [ngClass]="col.field=='isblocked' ? (row[col.field]=='Active'?'status-box shipped':'status-box cancelled') : ''">
+                <ng-container *ngIf="col.field_type=='p'">
+                {{((col.child!='')?((row[col.child])?row[col.child][col.field]:''):row[col.field])| number: '1.2-2' }}
+                </ng-container>
+                <ng-container *ngIf="col.field_type!='p'">
+                {{((col.child!='')?((row[col.child])?row[col.child][col.field]:''):row[col.field])|limitTo:50 }}
+                </ng-container>
+                </span>
+                </td>
+                </ng-container>
+                </tr>
+                <tr *ngIf="pagination.total_page==0">
+                <td [attr.colspan]="colSpanCount" align="center">No records found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div> -->
+    </div>
+<div class="clear"></div>
+</section>

@@ -1,0 +1,102 @@
+<section class="right-part addall_page">
+	<div class="body-part addorderbody addorderbodypart" *ngIf="_globalService.isFormLoaded == 'Yes'">
+		<form #collegeForm="ngForm" novalidate (ngSubmit)="collegeForm.valid && addEditColleges(collegeForm)">
+	  <input type="hidden" name="warehouseId" [(ngModel)]="formModel.warehouseId">
+			<div class="topheading">
+				<h1>{{(formModel.warehouseId)?'Edit':'Add'}} College 
+					<div class="btn-header">
+					  <button type="submit" mat-raised-button class="btn-main">Save</button>
+						<button type="button" mat-raised-button class="btn-line" (click)="_globalService.deleteTab(tabIndex,parentId)">Cancel</button>
+						<label class="hidden-xs hidden-sm">Fields marked with <span>*</span> are compulsory</label>
+					</div>
+					<div class="clear"></div>
+				</h1>
+			</div>
+			<div class="clear"></div>
+		  <div class="box">
+			  <div class="fixed-width">
+				  <div class="row">
+					<div class="col-md-4">
+						<mat-form-field appearance="outline"  class="md-block">
+							<mat-label>College Name</mat-label>
+							<input matInput placeholder="College Name" required #college_name="ngModel"  name="college_name" [(ngModel)]="formModel.college_name">
+							<mat-error *ngIf="college_name.errors && college_name.errors.required">
+								This is a <strong>required</strong> field
+							</mat-error>
+						</mat-form-field>
+					</div>
+					  <div class="col-md-4">
+						  <mat-form-field appearance="outline"  class="md-block">
+							  <mat-label>Representaive First Name</mat-label>
+							  <input matInput placeholder="First Name" required #college_represent_fname="ngModel"  name="college_represent_fname" [(ngModel)]="formModel.college_represent_fname">
+							  <mat-error *ngIf="college_represent_fname.errors && college_represent_fname.errors.required">
+								  This is a <strong>required</strong> field
+							  </mat-error>
+						  </mat-form-field>
+					  </div>
+					  <div class="col-md-4">
+						  <mat-form-field appearance="outline"  class="md-block">
+							  <mat-label>Representaive Last Name</mat-label>
+							  <input matInput placeholder="Last Name" required #college_represent_lname="ngModel"  name="college_represent_lname" [(ngModel)]="formModel.college_represent_lname">
+							  <mat-error *ngIf="college_represent_lname.errors && college_represent_lname.errors.required">
+								  This is a <strong>required</strong> field
+							  </mat-error>
+						  </mat-form-field>
+					  </div>
+				  </div>
+				  <div class="row">
+					<div class="col-md-4">
+						<mat-form-field appearance="outline"  class="md-block">
+							<mat-label>Representaive Email</mat-label>
+							<input matInput placeholder="Email" required #representative_email="ngModel"  name="representative_email" [(ngModel)]="formModel.representative_email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$">
+							<mat-error *ngIf="representative_email.errors && representative_email.errors.required">
+							  This is a <strong>required</strong> field
+						  </mat-error>
+						  <mat-error *ngIf="representative_email.errors && representative_email.errors.pattern">
+							  Enter a valid <strong>email</strong> address
+						  </mat-error>
+						</mat-form-field>
+					</div>
+					<div class="col-md-4">
+						<mat-form-field appearance="outline"  class="md-block">
+							<mat-label>Representative Phone</mat-label>
+							<input matInput placeholder="Phone" required type="number" #representative_phone="ngModel" name="representative_phone" [(ngModel)]="formModel.representative_phone" maxlength="12">
+							<mat-error *ngIf="(representative_phone.errors && representative_phone.errors.minlength) || (representative_phone.errors && representative_phone.errors.required)">
+								Phone number should be between 10 to 12 characters
+							</mat-error>
+						</mat-form-field>
+					</div>
+				  </div>
+				  <div class="row">						
+					  <div class="col-md-4">
+						  <div class="md-block">
+							  <mat-form-field appearance="outline"  class="md-block">
+							  <mat-label>Representative Password</mat-label>
+							  <input matInput placeholder="Password" #password="ngModel" [type]="hide ? 'text' : 'password'" name="password" [(ngModel)]="formModel.password">
+							  <i matSuffix (click)="hide = !hide" class="{{hide ? 'fa fa-eye-slash' : 'fa fa-eye'}}" aria-hidden="true"></i>
+						  </mat-form-field>
+						  </div>
+					  </div>
+					  <div class="col-md-4">
+						<div class="md-block">
+							<mat-form-field appearance="outline"  class="md-block">
+							<mat-label>Confirm Password</mat-label>
+							<input matInput placeholder="Confirm Password" #confirm_password="ngModel" [type]="hide ? 'text' : 'password'" name="confirm_password" [(ngModel)]="formModel.confirm_password">
+							<i matSuffix (click)="hide = !hide" class="{{hide ? 'fa fa-eye-slash' : 'fa fa-eye'}}" aria-hidden="true"></i>
+						</mat-form-field>
+						</div>
+					</div>
+				  </div>
+			  </div>
+			  <!-- ///////////////Buttons//// -->
+			  <div class="btn-header hidden-xs">
+				  <button type="submit" mat-raised-button class="btn-main">Save</button>
+				  <button type="button" mat-raised-button class="btn-line" (click)="_globalService.deleteTab(tabIndex,parentId)">Cancel</button>
+			  </div> 
+			  <div class="clear"></div> 
+			  <!-- ///////////////Buttons//// --> 
+		  </div>
+			<div class="clear"></div>
+		</form>
+  </div>
+</section>

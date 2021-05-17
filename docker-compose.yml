@@ -1,0 +1,24 @@
+version: '2.0'
+
+services:
+ db:
+   image: postgres
+ webservices:
+   build: .
+   #command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8888"
+   #command: bash -c "python manage.py migrate &&  python manage.py runserver 0.0.0.0:8888"
+   command: bash -c "python manage.py runserver 0.0.0.0:8888"
+   restart: always
+   container_name: globeeadmin_webapplication
+   volumes:
+     - .:/webapplication
+   ports:
+     - "8888:8888"
+   depends_on:
+     - db
+ app:
+  restart: always
+  image: 'admin'
+  build: ./admin
+  ports:
+   - "8065:8065"

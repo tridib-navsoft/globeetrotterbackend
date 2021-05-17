@@ -1,0 +1,49 @@
+
+
+<div class="map_field_heading" style="margin: 0px 0 10px; border-bottom: 1px solid #d9d9d9;">
+	<div class="pop-head uploadfile" style="margin:0px -24px 0 -24px;">
+		Image Library
+		
+	</div>
+	<mat-dialog-actions layout="row" style="margin-top:-10px;">
+		<button mat-raised-button class="btn-main" type="button" (click)="saveSelectedImage()">Select</button>
+		<button mat-raised-button class="btn-line" type="button" (click)="closeDialog()">Cancel</button>
+	</mat-dialog-actions>
+</div>
+
+<mat-dialog-content>
+	<div class="pop-body price_setup_dio" layout="column">
+		<div class="imagelibsearch">
+			<div class="pop_serch_sec">
+				<a href="javascript:void(0)">
+					<span class="icon-search1"></span>
+				</a>
+				<input type="text" placeholder="Search image..." #search="ngModel" [(ngModel)]="image_search_txt" (keyup.enter)="searchImage()"
+				 (keyup.backspace)="clearSearchData()">
+				<span class="icn_crs" *ngIf="image_search_txt!=''" (click)="clearMe()">×</span>
+			</div>
+		</div>
+		<div class="row">
+		    <div class="col-sm-12">
+		        <div class="panel panel-success">
+		            <div class="panel-body">
+		               <ul class="library-item" *ngIf="images.length>0">  
+							<li (click)="selectImg(i)" [class.active]="item.selected" *ngFor="let item of images; let i = index">
+								<img src="{{s3_link+item.name}}" title="{{item.title}}" alt="{{item.alt_title}}"/>  
+							</li>
+					   </ul>
+						<span class="notetext" style="text-align: center; width: 100%; float: left;" *ngIf="images.length==0">No image found. </span>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>		  	
+</mat-dialog-content>
+
+<!-- 
+<mat-dialog-actions layout="row">
+	<span flex></span>
+	<button mat-raised-button class="btn-main" type="button" (click)="saveSelectedImage()">Select</button>
+	<button mat-raised-button class="btn-line" type="button" (click)="closeDialog()">Cancel</button>
+</mat-dialog-actions> -->
+
